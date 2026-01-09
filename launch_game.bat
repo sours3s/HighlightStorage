@@ -1,11 +1,10 @@
 @echo off
-setlocal enabledelayedexpansion
 set "ROOT=C:\Highlight\minecraft"
 set "LIBS=%ROOT%\libraries"
 set "VERSIONS=%ROOT%\versions"
 set "ARG_FILE=%ROOT%\classpath.args"
 
-:: Очищаем и создаем файл аргументов
+:: Очищаем и создаем файл аргументов, записывая пути напрямую в файл
 echo -cp > "%ARG_FILE%"
 for /r "%LIBS%" %%i in (*.jar) do (<nul set /p ="%%i;" >> "%ARG_FILE%")
 for /r "%VERSIONS%" %%f in (*.jar) do (<nul set /p ="%%f;" >> "%ARG_FILE%")
