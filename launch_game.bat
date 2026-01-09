@@ -1,16 +1,12 @@
 @echo off
-set "ROOT=C:\Highlight\minecraft"
-set "LIBS=%ROOT%\libraries"
-set "VERSIONS=%ROOT%\versions"
-set "ARG_FILE=%ROOT%\classpath.args"
+cd /d "%~dp0"
+echo Launching Highlight...
 
-:: Создаем файл аргументов с кавычками для каждого JAR
-echo -cp > "%ARG_FILE%"
-for /r "%LIBS%" %%i in (*.jar) do (<nul set /p ="^"%%i^";" >> "%ARG_FILE%")
-for /r "%VERSIONS%" %%f in (*.jar) do (<nul set /p ="^"%%f^";" >> "%ARG_FILE%")
-<nul set /p ="^"%ROOT%\mods\highlight.jar^"" >> "%ARG_FILE%"
+:: Вся магия теперь внутри файла args.txt, который создает лаунчер
+java @args.txt
 
-echo Launching Highlight Client...
-:: Запуск через @-файл
-java -Xmx2G @%ARG_FILE% net.fabricmc.loader.impl.launch.knot.KnotClient --username HighlightUser --version 1.21.4 --gameDir "%ROOT%" --assetsDir "%ROOT%\assets" --assetIndex 1.21.4 --uuid 0 --accessToken 0
-pause
+if %ERRORLEVEL% NEQ 0 (
+    echo.
+    echo [ERROR] Game crashed! Code: %ERRORLEVEL%
+    pause
+)
