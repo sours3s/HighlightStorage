@@ -5,7 +5,6 @@ set "VERSIONS=%ROOT%\versions"
 set "ARG_FILE=%ROOT%\classpath.args"
 
 echo -cp > "%ARG_FILE%"
-:: Берем каждый путь в кавычки для обработки пробелов
 for /r "%LIBS%" %%i in (*.jar) do (<nul set /p ="^"%%i^";" >> "%ARG_FILE%")
 for /r "%VERSIONS%" %%f in (*.jar) do (<nul set /p ="^"%%f^";" >> "%ARG_FILE%")
 <nul set /p ="^"%ROOT%\mods\highlight.jar^"" >> "%ARG_FILE%"
